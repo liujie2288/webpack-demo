@@ -4,6 +4,6 @@
 
 ## 项目目录
 
-- 01.ProvidePlugin ProvidePlugin 基本使用
-- 02.externals externals 基本使用
+- 01-ProvidePlugin ProvidePlugin 基本使用
+- 02-externals externals 基本使用
 - 03-create-library 创建一个 libraray

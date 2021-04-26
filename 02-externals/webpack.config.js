@@ -8,19 +8,20 @@ module.exports = {
   output: {
     path: __dirname + "/dist",
     filename: "bundle.js",
-    libraryTarget:'umd'
+    // libraryTarget:'umd'
   },
   mode: "none",
   devServer: {
     open: true,
   },
   externals: {
-    jquery: {
-      commonjs: "jquery",
-      commonjs2: "jquery",
-      amd: "jquery",
-      root: "jQuery",
-    },
+    jquery: "jQuery",
+    // jquery: {
+    //   commonjs: "jquery",
+    //   commonjs2: "jquery",
+    //   amd: "jquery",
+    //   root: "jQuery",
+    // },
     // isFunction: ["jQuery", "isFunction"],
     // add: "commonjs ./math",
     // lodash: {

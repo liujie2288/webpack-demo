@@ -7,9 +7,9 @@
 ## 用途
 
 - 当想创建一个工具包提供给别人使用时，不希望将`jquery`，`lodash`这样的工具库也打包到结果中时
-- SPA时候为了加快js下载渲染，可以将一些固定的依赖（比如`jquery`），通过 CDN 来加载，打包中不需要添加该依赖
-- Node环境将一些外部依赖包通过require直接加载，不需要打包到代码中。例如：[webpack-node-externals
-](https://www.npmjs.com/package/webpack-node-externals)
+- SPA 时候为了加快 js 下载渲染，可以将一些固定的依赖（比如`jquery`），通过 CDN 来加载，打包中不需要添加该依赖
+- Node 环境将一些外部依赖包通过 require 直接加载，不需要打包到代码中。例如：[webpack-node-externals
+  ](https://www.npmjs.com/package/webpack-node-externals)
 
 ## 基本使用
 
@@ -30,9 +30,6 @@ module.exports = {
   },
   mode: "none",
   externals: {
-    // 用来告诉webpack，当遇到`import $ from jquery`引入jquery时,不将jquery源代码打包到最终结果中，而是直接导出用户环境jQuery变量作为依赖
-    // [key]:value形式
-    // 这里的`key`表示**源码中引入的任何依赖的名称**，`value`表示**如何查找/加载用户环境的该依赖**
     jquery: "jQuery",
   },
 };
@@ -54,6 +51,11 @@ module.exports = {
 
 ## 几种配置形式
 
+externals 的配置主要告诉 webpack 两件事情：
+
+1. 要排除打包的依赖名称。依赖名称可以是包名（jquery）,文件路径('./a/b')，自定名称等。
+2. 用户模块环境（Commonjs、AMD、全局变量、ES2015 模块）是什么，如何引入用户环境的该依赖。
+
 ### string
 
 ```javascript
@@ -63,6 +65,9 @@ module.exports = {
     }
   }
 ```
+用来告诉webpack，当遇到`import $ from jquery`或者`const $ = require('jquery')`引入jquery（对象key值）时,不将jquery源代码打包到最终结果中，而是直接导出用户环境jQuery（对象value值）变量作为依赖。这就需要用户环境中存在全局变量jQuery。
+
+在浏览器环境中，可以通过cdn提前引入jquery，这样`jQuery`变量就可以在全局访问，但是在Node的环境中，无法通过script标签的形式为环境挂载`jQuery`变量。更友好的方式是在使用时再require`node_modules`中的jquery包。externals 提供了指定模块上下文的形式。
 
 
 ## `output.libraryTarget`对 externals 的影响
@@ -73,3 +78,5 @@ module.exports = {
 
 - [webpack externals 官方文档](https://v4.webpack.docschina.org/configuration/externals/#array)
 - [webpack externals 深入理解](https://segmentfault.com/a/1190000012113011?utm_source=tag-newest)
+
+各种配置方式的含义，怎么使用
